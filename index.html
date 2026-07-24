@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <!-- SEO & Metadata Dasar -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portofolio Profesional Ridho Gusti Cahyadi - Web Developer. Menampilkan demo proyek terbaru, keahlian, dan layanan pembuatan website modern.">
+    <meta name="keywords" content="Web Developer, Ridho Gusti Cahyadi, Freelancer, Portofolio, Web Design, HTML, CSS, JavaScript">
+    <meta name="author" content="Ridho Gusti Cahyadi">
+    <title>Ridho Gusti Cahyadi | Web Developer</title>
+
+    <!-- Font Google & Icon FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS Terpisah -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="#hero" class="logo">Ridho<span>.dev</span></a>
+            
+            <nav class="nav-menu" id="nav-menu">
+                <a href="#about" class="nav-link">Tentang</a>
+                <a href="#skills" class="nav-link">Keahlian</a>
+                <a href="#projects" class="nav-link">Demo Projects</a>
+                <a href="#contact" class="nav-link">Kontak</a>
+            </nav>
+
+            <div class="nav-actions">
+                <!-- Tombol Switch Dark Mode -->
+                <button id="theme-toggle" class="theme-toggle" aria-label="Ubah Tema">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                
+                <!-- Menu Hamburger Mobile -->
+                <div class="hamburger" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <span class="badge">Tersedia untuk Project Freelance</span>
+                <h1 class="hero-title">Membangun Website Modern, <span class="gradient-text">Responsif</span> & Cepat.</h1>
+                <p class="hero-subtitle">Halo! Saya Ridho Gusti Cahyadi, seorang Web Developer yang fokus membuat website modern, responsif, dan cepat menggunakan HTML, CSS, dan JavaScript. Saya terus belajar dan siap membantu membuat website berkualitas sesuai kebutuhan klien.</p>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn btn-primary">Lihat Demo Projects <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="#contact" class="btn btn-secondary">Hubungi Saya</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="profile-card">
+                       class=<img src="images/profile.png" class="profile-img" alt="Foto Profil">
+                    <div class="floating-badge badge-1">
+                        <i class="fa-solid fa-code"></i>
+                        <div>
+                            <strong>Clean Code</strong>
+                            <small>HTML5, CSS3, JS</small>
+                        </div>
+                    </div>
+                    <div class="floating-badge badge-2">
+                        <i class="fa-solid fa-mobile-screen-button"></i>
+                        <div>
+                            <strong>Responsive</strong>
+                            <small>Siap Tampil di Semua Layar</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Tentang Saya</h2>
+                <p>Mengkombinasikan desain estetik dengan arsitektur kode yang efisien.</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-box">
+                    <i class="fa-solid fa-layer-group icon"></i>
+                    <h3>Modern Design</h3>
+                    <p>Fokus menciptakan antarmuka intuitif dan rapi yang mengutamakan kenyamanan pengguna.</p>
+                </div>
+                <div class="about-box">
+                    <i class="fa-solid fa-laptop-code icon"></i>
+                    <h3>Clean Code</h3>
+                    <p>Penulisan kode yang rapi, modular, mudah dirawat, dan mematuhi standar web terbaru.</p>
+                </div>
+                <div class="about-box">
+                    <i class="fa-solid fa-rocket icon"></i>
+                    <h3>Optimasi & Performa</h3>
+                    <p>Memastikan situs web memuat dengan cepat di seluruh perangkat serta nyaman digunakan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Keahlian Utama</h2>
+                <p>Teknologi dan tools yang saya gunakan dalam pengembangan web.</p>
+            </div>
+            <div class="skills-wrapper">
+                <div class="skill-card">
+                    <div class="skill-info">
+                        <span>HTML5 / CSS3 / JavaScript (ES6+)</span>
+                        <span>90%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress" style="width: 90%;"></div></div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-info">
+                        <span>Responsive Web Design</span>
+                        <span>95%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress" style="width: 95%;"></div></div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-info">
+                        <span>Tailwind CSS / Bootstrap</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress" style="width: 85%;"></div></div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-info">
+                        <span>Git / GitHub</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress" style="width: 80%;"></div></div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-info">
+                        <span>Basic Web Performance & SEO</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress" style="width: 80%;"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Portfolio Projects</h2>
+                <p>Beberapa demo proyek dan eksplorasi desain yang telah saya buat.</p>
+            </div>
+            <div class="projects-grid">
+                
+                <!-- Project Item 1 -->
+                <article class="project-card">
+                    <div class="project-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Demo Fintech Dashboard">
+                    </div>
+                    <div class="project-content">
+                        <span class="tag">Demo Web App</span>
+                        <h3>Analytics Dashboard Concept</h3>
+                        <p>Demo antarmuka dashboard keuangan interaktif dengan grafik responsif dan tampilan clean.</p>
+                        <div class="project-tech">
+                            <span>HTML5</span>
+                            <span>CSS3</span>
+                            <span>JavaScript</span>
+                        </div>
+                        <a href="#" class="project-link">Lihat Demo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </div>
+                </article>
+
+                <!-- Project Item 2 -->
+                <article class="project-card">
+                    <div class="project-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1555421689-491a97ff2040?auto=format&fit=crop&w=800&q=80" alt="Demo E-Commerce Store">
+                    </div>
+                    <div class="project-content">
+                        <span class="tag">Demo E-Commerce</span>
+                        <h3>Luxure - Fashion Store Concept</h3>
+                        <p>Desain toko online pakaian modern dengan fitur filter kategori dan tata letak responsif.</p>
+                        <div class="project-tech">
+                            <span>HTML5</span>
+                            <span>CSS Grid/Flexbox</span>
+                            <span>JS</span>
+                        </div>
+                        <a href="#" class="project-link">Lihat Demo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </div>
+                </article>
+
+                <!-- Project Item 3 -->
+                <article class="project-card">
+                    <div class="project-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Demo SaaS Landing Page">
+                    </div>
+                    <div class="project-content">
+                        <span class="tag">Demo Landing Page</span>
+                        <h3>TaskFlow - Product Landing Page</h3>
+                        <p>Landing page produk SaaS dengan komponen interaktif, efek hover halus, dan dark mode.</p>
+                        <div class="project-tech">
+                            <span>HTML5</span>
+                            <span>Sass</span>
+                            <span>JavaScript</span>
+                        </div>
+                        <a href="#" class="project-link">Lihat Demo <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h2>Mari Bekerja Sama!</h2>
+                    <p>Apakah Anda memiliki proyek menarik atau ingin berdiskusi seputar kebutuhan website? Kirimkan pesan, dan saya akan merespons secepatnya.</p>
+                    
+                    <div class="info-list">
+                        <div class="info-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <div>
+                                <span>Email</span>
+                                <strong>ridhogusti2308@gmail.com</strong>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <div>
+                                <span>Lokasi</span>
+                                <strong>KP Masjid RT 02 RW 04<br>
+					Kec. Bojonggede, Kel.
+                           Bojonggede<br>
+					Kab. Bogor, Jawa Barat 16922</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="#" aria-label="Github"><i class="fa-brands fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Upwork"><i class="fa-solid fa-briefcase"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                    </div>
+                </div>
+
+                <form class="contact-form" id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Nama Lengkap</label>
+                        <input type="text" id="name" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required placeholder="john@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Pesan / Detail Proyek</label>
+                        <textarea id="message" rows="5" required placeholder="Jelaskan kebutuhan website Anda..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Kirim Pesan <i class="fa-solid fa-paper-plane"></i></button>
+                    <div id="form-alert" class="form-alert"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <p>&copy; 2026 Ridho Gusti Cahyadi. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="#hero">Kembali ke Atas <i class="fa-solid fa-arrow-up"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Terpisah -->
+    <script src="script.js"></script>
+</body>
+</html>
+
