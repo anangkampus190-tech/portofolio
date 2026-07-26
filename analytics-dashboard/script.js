@@ -1,4 +1,4 @@
-                plugins: {
+k                plugins: {
                     legend: {
                         position: 'top',
                         align: 'end',
@@ -160,5 +160,6 @@
 
     console.log('%c Ridho Dev Analytics Dashboard initialized successfully! ', 'background: #6366f1; color: #ffffff; font-weight: bold; padding: 4px 8px; border-radius: 4px;');
 });
+
 
 
