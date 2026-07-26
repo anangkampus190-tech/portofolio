@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ridho Dev - Dashboard Analitik Premium buatan Ridho Gusti Cahyadi. Solusi pemantauan bisnis modern, cepat, dan responsif.">
+    <meta name="author" content="Ridho Gusti Cahyadi">
+    <meta name="robots" content="index, follow">
+    <title>Ridho Dev — Dashboard Analitik Premium</title>
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Overlay untuk Mobile Sidebar -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="#" class="brand-logo">
+                    <div class="brand-icon">
+                        <i data-lucide="code-2"></i>
+                    </div>
+                    <div class="brand-info">
+                        <span class="brand-name">Ridho Dev</span>
+                        <span class="brand-subtitle">Analytics Pro</span>
+                    </div>
+                </a>
+                <button class="btn-icon sidebar-close-btn" id="sidebarCloseBtn" aria-label="Tutup Sidebar">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-group">
+                    <span class="nav-group-title">Utama</span>
+                    <a href="#" class="nav-item active">
+                        <i data-lucide="layout-dashboard"></i>
+                        <span>Dashboard</span>
+                        <span class="badge badge-accent">Live</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i data-lucide="line-chart"></i>
+                        <span>Analitik</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i data-lucide="shopping-bag"></i>
+                        <span>Penjualan</span>
+                        <span class="badge badge-neutral">12</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i data-lucide="users"></i>
+                        <span>Pelanggan</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i data-lucide="package"></i>
+                        <span>Produk</span>
+                    </a>
+                </div>
+
+                <div class="nav-group">
+                    <span class="nav-group-title">Laporan & Pengaturan</span>
+                    <a href="#" class="nav-item">
+                        <i data-lucide="file-text"></i>
+                        <span>Laporan</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i data-lucide="settings"></i>
+                        <span>Pengaturan</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i data-lucide="help-circle"></i>
+                        <span>Pusat Bantuan</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-card-mini">
+                    <div class="avatar avatar-online">
+                        <img src="assets/images/avatar.jpg" alt="Ridho Gusti Cahyadi" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'">
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">Ridho G. Cahyadi</span>
+                        <span class="user-role">Senior Developer</span>
+                    </div>
+                    <button class="btn-icon btn-logout" aria-label="Keluar">
+                        <i data-lucide="log-out"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN WRAPPER -->
+        <div class="main-wrapper">
+            <!-- NAVBAR -->
+            <header class="navbar">
+                <div class="navbar-left">
+                    <button class="btn-icon sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Buka Sidebar">
+                        <i data-lucide="menu"></i>
+                    </button>
+                    
+                    <div class="search-bar">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" id="globalSearch" placeholder="Cari transaksi, laporan, atau statistik... (Ctrl + K)">
+                        <kbd class="shortcut-key">Ctrl K</kbd>
+                    </div>
+                </div>
+
+                <div class="navbar-right">
+                    <!-- Toggle Theme -->
+                    <button class="btn-icon theme-toggle-btn" id="themeToggleBtn" title="Ganti Mode Tampilan (Dark/Light)">
+                        <i data-lucide="sun" class="icon-sun"></i>
+                        <i data-lucide="moon" class="icon-moon"></i>
+                    </button>
+
+                    <!-- Notification Dropdown -->
+                    <div class="dropdown-container" id="notifDropdown">
+                        <button class="btn-icon dropdown-trigger" aria-label="Notifikasi">
+                            <i data-lucide="bell"></i>
+                            <span class="badge-dot"></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right notif-menu">
+                            <div class="dropdown-header">
+                                <h6>Notifikasi</h6>
+                                <span class="badge badge-accent">3 Baru</span>
+                            </div>
+                            <div class="dropdown-body">
+                                <a href="#" class="notif-item unread">
+                                    <div class="notif-icon bg-success-subtle text-success">
+                                        <i data-lucide="shopping-cart"></i>
+                                    </div>
+                                    <div class="notif-content">
+                                        <p class="notif-text"><strong>Pesanan baru #RD-8902</strong> dari Budi Santoso</p>
+                                        <span class="notif-time">2 menit lalu</span>
+                                    </div>
+                                </a>
+                                <a href="#" class="notif-item unread">
+                                    <div class="notif-icon bg-primary-subtle text-primary">
+                                        <i data-lucide="user-plus"></i>
+                                    </div>
+                                    <div class="notif-content">
+                                        <p class="notif-text">Pelanggan baru terdaftar: <strong>Siti Rahma</strong></p>
+                                        <span class="notif-time">15 menit lalu</span>
+                                    </div>
+                                </a>
+                                <a href="#" class="notif-item unread">
+                                    <div class="notif-icon bg-warning-subtle text-warning">
+                                        <i data-lucide="alert-circle"></i>
+                                    </div>
+                                    <div class="notif-content">
+                                        <p class="notif-text">Kapasitas server mencapai <strong>85%</strong></p>
+                                        <span class="notif-time">1 jam lalu</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="dropdown-footer">
+                                <a href="#">Lihat Semua Notifikasi</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User Profile Dropdown -->
+                    <div class="dropdown-container" id="profileDropdown">
+                        <button class="profile-trigger dropdown-trigger">
+                            <div class="avatar avatar-sm">
+                                <img src="assets/images/avatar.jpg" alt="Ridho Gusti Cahyadi" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'">
+                            </div>
+                            <span class="profile-name">Ridho G.</span>
+                            <i data-lucide="chevron-down" class="chevron-icon"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right profile-menu">
+                            <div class="profile-header">
+                                <p class="profile-title">Ridho Gusti Cahyadi</p>
+                                <p class="profile-email">ridho@ridhodev.com</p>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">
+                                <i data-lucide="user"></i> Profil Saya
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i data-lucide="sliders"></i> Preferensi
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i data-lucide="shield"></i> Keamanan
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item text-danger">
+                                <i data-lucide="log-out"></i> Keluar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- CONTENT BODY -->
+            <main class="content-body">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="page-header-title">
+                        <h1>Dashboard Analitik</h1>
+                        <p>Selamat datang kembali, Ridho! Berikut adalah ringkasan performa bisnis Anda hari ini.</p>
+                    </div>
+                    <div class="page-header-actions">
+                        <button class="btn btn-secondary ripple" id="filterDateBtn">
+                            <i data-lucide="calendar"></i>
+                            <span>7 Hari Terakhir</span>
+                        </button>
+                        <button class="btn btn-primary ripple" id="exportBtn">
+                            <i data-lucide="download"></i>
+                            <span>Ekspor Data</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- METRIC CARDS -->
+                <div class="metrics-grid">
+                    <!-- Metric Card 1 -->
+                    <div class="metric-card glass-card">
+                        <div class="metric-header">
+                            <span class="metric-title">Total Pendapatan</span>
+                            <div class="metric-icon bg-primary-subtle text-primary">
+                                <i data-lucide="dollar-sign"></i>
+                            </div>
+                        </div>
+                        <div class="metric-body">
+                            <h2 class="metric-value" data-counter="128450000" data-prefix="Rp ">Rp 0</h2>
+                            <div class="metric-trend trend-up">
+                                <i data-lucide="trending-up"></i>
+                                <span>+12.5%</span>
+                                <span class="trend-label">vs bulan lalu</span>
+                            </div>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: 78%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Metric Card 2 -->
+                    <div class="metric-card glass-card">
+                        <div class="metric-header">
+                            <span class="metric-title">Total Pesanan</span>
+                            <div class="metric-icon bg-success-subtle text-success">
+                                <i data-lucide="shopping-bag"></i>
+                            </div>
+                        </div>
+                        <div class="metric-body">
+                            <h2 class="metric-value" data-counter="1420" data-prefix="">0</h2>
+                            <div class="metric-trend trend-up">
+                                <i data-lucide="trending-up"></i>
+                                <span>+8.2%</span>
+                                <span class="trend-label">vs bulan lalu</span>
+                            </div>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar bg-success" style="width: 64%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Metric Card 3 -->
+                    <div class="metric-card glass-card">
+                        <div class="metric-header">
+                            <span class="metric-title">Pengguna Aktif</span>
+                            <div class="metric-icon bg-info-subtle text-info">
+                                <i data-lucide="users"></i>
+                            </div>
+                        </div>
+                        <div class="metric-body">
+                            <h2 class="metric-value" data-counter="8940" data-prefix="">0</h2>
+                            <div class="metric-trend trend-up">
+                                <i data-lucide="trending-up"></i>
+                                <span>+18.4%</span>
+                                <span class="trend-label">vs bulan lalu</span>
+                            </div>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar bg-info" style="width: 88%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Metric Card 4 -->
+                    <div class="metric-card glass-card">
+                        <div class="metric-header">
+                            <span class="metric-title">Tingkat Konversi</span>
+                            <div class="metric-icon bg-warning-subtle text-warning">
+                                <i data-lucide="percent"></i>
+                            </div>
+                        </div>
+                        <div class="metric-body">
+                            <h2 class="metric-value" data-counter="3.42" data-suffix="%" data-decimals="2">0%</h2>
+                            <div class="metric-trend trend-down">
+                                <i data-lucide="trending-down"></i>
+                                <span>-0.8%</span>
+                                <span class="trend-label">vs bulan lalu</span>
+                            </div>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar bg-warning" style="width: 45%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CHARTS SECTION 1 -->
+                <div class="charts-grid-main">
+                    <!-- Revenue Chart -->
+                    <div class="card glass-card chart-card">
+                        <div class="card-header">
+                            <div>
+                                <h3 class="card-title">Ikhtisar Pendapatan & Penjualan</h3>
+                                <p class="card-subtitle">Perbandingan arus kas bulanan sepanjang tahun berjalan</p>
+                            </div>
+                            <div class="card-actions">
+                                <div class="segmented-control">
+                                    <button class="segmented-btn active" data-period="monthly">Bulanan</button>
+                                    <button class="segmented-btn" data-period="weekly">Mingguan</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-wrapper">
+                                <canvas id="revenueChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visitors Chart / Doughnut -->
+                    <div class="card glass-card chart-card">
+                        <div class="card-header">
+                            <div>
+                                <h3 class="card-title">Sumber Pengunjung</h3>
+                                <p class="card-subtitle">Distribusi lalu lintas berdasarkan saluran</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-wrapper chart-wrapper-donut">
+                                <canvas id="visitorsChart"></canvas>
+                            </div>
+                            <div class="donut-legend" id="donutLegend"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CHARTS & TABLES SECTION 2 -->
+                <div class="dashboard-bottom-grid">
+                    <!-- Recent Transactions Table -->
+                    <div class="card glass-card table-card">
+                        <div class="card-header">
+                            <div>
+                                <h3 class="card-title">Transaksi Terbaru</h3>
+                                <p class="card-subtitle">Daftar transaksi pelanggan masuk terkini</p>
+                            </div>
+                            <a href="#" class="btn btn-text">Lihat Semua</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table" id="transactionTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Transaksi</th>
+                                            <th>Pelanggan</th>
+                                            <th>Produk</th>
+                                            <th>Jumlah</th>
+                                            <th>Status</th>
+                                            <th>Tanggal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="font-mono">#RD-9021</td>
+                                            <td>
+                                                <div class="user-inline">
+                                                    <div class="avatar avatar-xs">
+                                               
