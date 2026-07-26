@@ -1,58 +1,3 @@
-k                plugins: {
-                    legend: {
-                        position: 'top',
-                        align: 'end',
-                        labels: {
-                            color: colors.textPrimary,
-                            usePointStyle: true,
-                            boxWidth: 8,
-                            font: { family: 'Plus Jakarta Sans', size: 12, weight: '600' }
-                        }
-                    },
-                    tooltip: {
-                        backgroundColor: colors.cardBg,
-                        titleColor: colors.textPrimary,
-                        bodyColor: colors.textMuted,
-                        borderColor: 'rgba(255,255,255,0.1)',
-                        borderWidth: 1,
-                        padding: 12,
-                        boxPadding: 6,
-                        usePointStyle: true,
-                        bodyFont: { family: 'Plus Jakarta Sans' }
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: { color: colors.gridColor },
-                        ticks: { color: colors.textMuted, font: { family: 'Plus Jakarta Sans', size: 11 } }
-                    },
-                    y: {
-                        grid: { color: colors.gridColor },
-                        ticks: { color: colors.textMuted, font: { family: 'Plus Jakarta Sans', size: 11 } }
-                    }
-                }
-            }
-        });
-    };
-
-    // Visitors Chart (Doughnut)
-    const initVisitorsChart = () => {
-        const ctx = document.getElementById('visitorsChart');
-        if (!ctx) return;
-
-        const isDark = DOM.html.getAttribute('data-theme') === 'dark';
-        const colors = getChartThemeColors(isDark);
-
-        const visitorData = {
-            labels: ['Pencarian Organik', 'Sosial Media', 'Rujukan (Referral)', 'Langsung (Direct)'],
-            datasets: [{
-                data: [42, 28, 18, 12],
-                backgroundColor: ['#6366f1', '#10b981', '#06b6d4', '#f59e0b'],
-                borderWidth: 0,
-                hoverOffset: 6
-            }]
-        };
-
         visitorsChartInstance = new Chart(ctx, {
             type: 'doughnut',
             data: visitorData,
@@ -160,7 +105,3 @@ k                plugins: {
 
     console.log('%c Ridho Dev Analytics Dashboard initialized successfully! ', 'background: #6366f1; color: #ffffff; font-weight: bold; padding: 4px 8px; border-radius: 4px;');
 });
-
-
-
-
