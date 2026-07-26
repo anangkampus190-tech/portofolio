@@ -327,6 +327,58 @@
     animateCounters();
     initRevenueChart();
     initVisitorsChart();
+    // NAVIGASI MENU SIDEBAR DINAMIS
+
+    const mainContent = document.querySelector('.main-content') || document.querySelector('main');
+    const originalDashboardHtml = mainContent ? mainContent.innerHTML : '';
+    const sidebarLinks = document.querySelectorAll('.sidebar-nav a, .sidebar a, .nav-item');
+
+    sidebarLinks.forEach((link) => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (!href || href === '#' || this.classList.contains('nav-item')) {
+                e.preventDefault();
+            }
+
+            // Tandai menu aktif
+            sidebarLinks.forEach(m => m.classList.remove('active'));
+            this.classList.add('active');
+
+            const menuText = this.querySelector('span')?.innerText.trim() || this.innerText.trim();
+
+            if (!mainContent) return;
+
+            if (menuText.toLowerCase().includes('dashboard') || menuText.toLowerCase().includes('utama')) {
+                mainContent.innerHTML = originalDashboardHtml;
+                if (typeof initRevenueChart === 'function') initRevenueChart();
+                if (typeof initVisitorsChart === 'function') initVisitorsChart();
+                if (typeof animateCounters === 'function') animateCounters();
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            } else {
+                mainContent.innerHTML = `
+                    <div style="padding: 1rem 0;">
+                        <div class="page-header" style="margin-bottom: 2rem;">
+                            <h1 style="font-size: 1.8rem; font-weight: 700;">Halaman ${menuText}</h1>
+                            <p style="color: var(--text-secondary, #94a3b8);">Modul manajemen ${menuText}.</p>
+                        </div>
+                        <div class="card glass-card" style="padding: 2rem; border-radius: 12px; background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <h3>Panel ${menuText}</h3>
+                            <p style="margin-top: 0.5rem; color: var(--text-secondary, #94a3b8);">
+                                Fitur dan data untuk <strong>${menuText}</strong> berhasil dimuat secara dinamis.
+                            </p>
+                        </div>
+                    </div>
+                `;
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            }
+
+            // Tutup sidebar di HP saat menu diklik
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            if (sidebar) sidebar.classList.remove('active');
+            if (overlay) overlay.classList.remove('active');
+        });
+    });
 
     console.log('%c Ridho Dev Analytics Dashboard initialized successfully! ', 'background: #6366f1; color: #ffffff; font-weight: bold; padding: 4px 8px; border-radius: 4px;');
 });
