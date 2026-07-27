@@ -3,782 +3,325 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ridho Dev - Dashboard Analitik Premium buatan Ridho Gusti Cahyadi. Solusi pemantauan bisnis modern, cepat, dan responsif.">
-    <meta name="author" content="Ridho Gusti Cahyadi">
-    <meta name="robots" content="index, follow">
-    <title>Ridho Dev — Dashboard Analitik Premium</title>
-
-    <!-- Google Fonts: Plus Jakarta Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <!-- Chart.js -->
+    <title>Ridho Dev Enterprise SaaS Dashboard</title>
+    <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --border-color: #334155;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
 
-    <!-- Style CSS -->
-    <link rel="stylesheet" href="style.css">
+        [data-theme="light"] {
+            --bg-main: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --border-color: #e2e8f0;
+            --success: #059669;
+            --warning: #d97706;
+            --danger: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Splash Screen */
+        #splashScreen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-main);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.4s ease;
+        }
+
+        /* Sidebar */
+        aside {
+            width: 260px;
+            background-color: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
+
+        .sidebar-brand {
+            padding: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 1rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .nav-item {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: var(--primary);
+            color: #fff;
+        }
+
+        /* Main Wrapper */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Topbar */
+        header {
+            height: 70px;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1.5rem;
+        }
+
+        /* Content Area */
+        main {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        /* Cards & Components */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Table Styling */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        .data-table th, .data-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .status-badge.selesai, .status-badge.active { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+        .status-badge.pending { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+        .status-badge.gagal, .status-badge.refund { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+
+        /* Modals */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal.show { display: flex; }
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        /* Toast Container */
+        #toastContainer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 2000;
+        }
+        .toast {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-size: 0.85rem;
+            transition: opacity 0.3s;
+        }
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.error { border-left: 4px solid var(--danger); }
+        .toast.info { border-left: 4px solid var(--primary); }
+    </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Overlay untuk Mobile Sidebar -->
-        <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-        <!-- SIDEBAR -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <a href="#" class="brand-logo">
-                    <div class="brand-icon">
-                        <i data-lucide="code-2"></i>
-                    </div>
-                    <div class="brand-info">
-                        <span class="brand-name">Ridho Dev</span>
-                        <span class="brand-subtitle">Analytics Pro</span>
-                    </div>
-                </a>
-                <button class="btn-icon sidebar-close-btn" id="sidebarCloseBtn" aria-label="Tutup Sidebar">
-                    <i data-lucide="x"></i>
-                </button>
-            </div>
-
-            <nav class="sidebar-nav">
-                <div class="nav-group">
-                    <span class="nav-group-title">Utama</span>
-                    <a href="#" class="nav-item active">
-                        <i data-lucide="layout-dashboard"></i>
-                        <span>Dashboard</span>
-                        <span class="badge badge-accent">Live</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i data-lucide="line-chart"></i>
-                        <span>Analitik</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i data-lucide="shopping-bag"></i>
-                        <span>Penjualan</span>
-                        <span class="badge badge-neutral">12</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i data-lucide="users"></i>
-                        <span>Pelanggan</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i data-lucide="package"></i>
-                        <span>Produk</span>
-                    </a>
-                </div>
-
-                <div class="nav-group">
-                    <span class="nav-group-title">Laporan & Pengaturan</span>
-                    <a href="#" class="nav-item">
-                        <i data-lucide="file-text"></i>
-                        <span>Laporan</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i data-lucide="settings"></i>
-                        <span>Pengaturan</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i data-lucide="help-circle"></i>
-                        <span>Pusat Bantuan</span>
-                    </a>
-                </div>
-            </nav>
-
-            <div class="sidebar-footer">
-                <div class="user-card-mini">
-                    <div class="avatar avatar-online">
-                        <img src="assets/images/avatar.jpg" alt="Ridho Gusti Cahyadi" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'">
-                    </div>
-                    <div class="user-info">
-                        <span class="user-name">Ridho G. Cahyadi</span>
-                        <span class="user-role">Senior Developer</span>
-                    </div>
-                    <button class="btn-icon btn-logout" aria-label="Keluar">
-                        <i data-lucide="log-out"></i>
-                    </button>
-                </div>
-            </div>
-        </aside>
-
-        <!-- MAIN WRAPPER -->
-        <div class="main-wrapper">
-            <!-- NAVBAR -->
-            <header class="navbar">
-                <div class="navbar-left">
-                    <button class="btn-icon sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Buka Sidebar">
-                        <i data-lucide="menu"></i>
-                    </button>
-                    
-                    <div class="search-bar">
-                        <i data-lucide="search" class="search-icon"></i>
-                        <input type="text" id="globalSearch" placeholder="Cari transaksi, laporan, atau statistik... (Ctrl + K)">
-                        <kbd class="shortcut-key">Ctrl K</kbd>
-                    </div>
-                </div>
-
-                <div class="navbar-right">
-                    <!-- Toggle Theme -->
-                    <button class="btn-icon theme-toggle-btn" id="themeToggleBtn" title="Ganti Mode Tampilan (Dark/Light)">
-                        <i data-lucide="sun" class="icon-sun"></i>
-                        <i data-lucide="moon" class="icon-moon"></i>
-                    </button>
-
-                    <!-- Notification Dropdown -->
-                    <div class="dropdown-container" id="notifDropdown">
-                        <button class="btn-icon dropdown-trigger" aria-label="Notifikasi">
-                            <i data-lucide="bell"></i>
-                            <span class="badge-dot"></span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right notif-menu">
-                            <div class="dropdown-header">
-                                <h6>Notifikasi</h6>
-                                <span class="badge badge-accent">3 Baru</span>
-                            </div>
-                            <div class="dropdown-body">
-                                <a href="#" class="notif-item unread">
-                                    <div class="notif-icon bg-success-subtle text-success">
-                                        <i data-lucide="shopping-cart"></i>
-                                    </div>
-                                    <div class="notif-content">
-                                        <p class="notif-text"><strong>Pesanan baru #RD-8902</strong> dari Budi Santoso</p>
-                                        <span class="notif-time">2 menit lalu</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="notif-item unread">
-                                    <div class="notif-icon bg-primary-subtle text-primary">
-                                        <i data-lucide="user-plus"></i>
-                                    </div>
-                                    <div class="notif-content">
-                                        <p class="notif-text">Pelanggan baru terdaftar: <strong>Siti Rahma</strong></p>
-                                        <span class="notif-time">15 menit lalu</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="notif-item unread">
-                                    <div class="notif-icon bg-warning-subtle text-warning">
-                                        <i data-lucide="alert-circle"></i>
-                                    </div>
-                                    <div class="notif-content">
-                                        <p class="notif-text">Kapasitas server mencapai <strong>85%</strong></p>
-                                        <span class="notif-time">1 jam lalu</span>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="dropdown-footer">
-                                <a href="#">Lihat Semua Notifikasi</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- User Profile Dropdown -->
-                    <div class="dropdown-container" id="profileDropdown">
-                        <button class="profile-trigger dropdown-trigger">
-                            <div class="avatar avatar-sm">
-                                <img src="assets/images/avatar.jpg" alt="Ridho Gusti Cahyadi" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'">
-                            </div>
-                            <span class="profile-name">Ridho G.</span>
-                            <i data-lucide="chevron-down" class="chevron-icon"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right profile-menu">
-                            <div class="profile-header">
-                                <p class="profile-title">Ridho Gusti Cahyadi</p>
-                                <p class="profile-email">ridho@ridhodev.com</p>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i data-lucide="user"></i> Profil Saya
-                            </a>
-                            <a href="#" class="dropdown-item">
-                                <i data-lucide="sliders"></i> Preferensi
-                            </a>
-                            <a href="#" class="dropdown-item">
-                                <i data-lucide="shield"></i> Keamanan
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item text-danger">
-                                <i data-lucide="log-out"></i> Keluar
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <!-- CONTENT BODY -->
-            <main class="content-body">
-                <!-- Page Header -->
-                <div class="page-header">
-                    <div class="page-header-title">
-                        <h1>Dashboard Analitik</h1>
-                        <p>Selamat datang kembali, Ridho! Berikut adalah ringkasan performa bisnis Anda hari ini.</p>
-                    </div>
-                    <div class="page-header-actions">
-                        <button class="btn btn-secondary ripple" id="filterDateBtn">
-                            <i data-lucide="calendar"></i>
-                            <span>7 Hari Terakhir</span>
-                        </button>
-                        <button class="btn btn-primary ripple" id="exportBtn">
-                            <i data-lucide="download"></i>
-                            <span>Ekspor Data</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- METRIC CARDS -->
-                <div class="metrics-grid">
-                    <!-- Metric Card 1 -->
-                    <div class="metric-card glass-card">
-                        <div class="metric-header">
-                            <span class="metric-title">Total Pendapatan</span>
-                            <div class="metric-icon bg-primary-subtle text-primary">
-                                <i data-lucide="dollar-sign"></i>
-                            </div>
-                        </div>
-                        <div class="metric-body">
-                            <h2 class="metric-value" data-counter="128450000" data-prefix="Rp ">Rp 0</h2>
-                            <div class="metric-trend trend-up">
-                                <i data-lucide="trending-up"></i>
-                                <span>+12.5%</span>
-                                <span class="trend-label">vs bulan lalu</span>
-                            </div>
-                        </div>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar" style="width: 78%;"></div>
-                        </div>
-                    </div>
-
-                    <!-- Metric Card 2 -->
-                    <div class="metric-card glass-card">
-                        <div class="metric-header">
-                            <span class="metric-title">Total Pesanan</span>
-                            <div class="metric-icon bg-success-subtle text-success">
-                                <i data-lucide="shopping-bag"></i>
-                            </div>
-                        </div>
-                        <div class="metric-body">
-                            <h2 class="metric-value" data-counter="1420" data-prefix="">0</h2>
-                            <div class="metric-trend trend-up">
-                                <i data-lucide="trending-up"></i>
-                                <span>+8.2%</span>
-                                <span class="trend-label">vs bulan lalu</span>
-                            </div>
-                        </div>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar bg-success" style="width: 64%;"></div>
-                        </div>
-                    </div>
-
-                    <!-- Metric Card 3 -->
-                    <div class="metric-card glass-card">
-                        <div class="metric-header">
-                            <span class="metric-title">Pengguna Aktif</span>
-                            <div class="metric-icon bg-info-subtle text-info">
-                                <i data-lucide="users"></i>
-                            </div>
-                        </div>
-                        <div class="metric-body">
-                            <h2 class="metric-value" data-counter="8940" data-prefix="">0</h2>
-                            <div class="metric-trend trend-up">
-                                <i data-lucide="trending-up"></i>
-                                <span>+18.4%</span>
-                                <span class="trend-label">vs bulan lalu</span>
-                            </div>
-                        </div>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar bg-info" style="width: 88%;"></div>
-                        </div>
-                    </div>
-
-                    <!-- Metric Card 4 -->
-                    <div class="metric-card glass-card">
-                        <div class="metric-header">
-                            <span class="metric-title">Tingkat Konversi</span>
-                            <div class="metric-icon bg-warning-subtle text-warning">
-                                <i data-lucide="percent"></i>
-                            </div>
-                        </div>
-                        <div class="metric-body">
-                            <h2 class="metric-value" data-counter="3.42" data-suffix="%" data-decimals="2">0%</h2>
-                            <div class="metric-trend trend-down">
-                                <i data-lucide="trending-down"></i>
-                                <span>-0.8%</span>
-                                <span class="trend-label">vs bulan lalu</span>
-                            </div>
-                        </div>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar bg-warning" style="width: 45%;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CHARTS SECTION 1 -->
-                <div class="charts-grid-main">
-                    <!-- Revenue Chart -->
-                    <div class="card glass-card chart-card">
-                        <div class="card-header">
-                            <div>
-                                <h3 class="card-title">Ikhtisar Pendapatan & Penjualan</h3>
-                                <p class="card-subtitle">Perbandingan arus kas bulanan sepanjang tahun berjalan</p>
-                            </div>
-                            <div class="card-actions">
-                                <div class="segmented-control">
-                                    <button class="segmented-btn active" data-period="monthly">Bulanan</button>
-                                    <button class="segmented-btn" data-period="weekly">Mingguan</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart-wrapper">
-                                <canvas id="revenueChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Visitors Chart / Doughnut -->
-                    <div class="card glass-card chart-card">
-                        <div class="card-header">
-                            <div>
-                                <h3 class="card-title">Sumber Pengunjung</h3>
-                                <p class="card-subtitle">Distribusi lalu lintas berdasarkan saluran</p>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart-wrapper chart-wrapper-donut">
-                                <canvas id="visitorsChart"></canvas>
-                            </div>
-                            <div class="donut-legend" id="donutLegend"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CHARTS & TABLES SECTION 2 -->
-                <div class="dashboard-bottom-grid">
-                    <!-- Recent Transactions Table -->
-                    <div class="card glass-card table-card">
-                        <div class="card-header">
-                            <div>
-                                <h3 class="card-title">Transaksi Terbaru</h3>
-                                <p class="card-subtitle">Daftar transaksi pelanggan masuk terkini</p>
-                            </div>
-                            <a href="#" class="btn btn-text">Lihat Semua</a>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table" id="transactionTable">
-                                    <thead>
-                                        <tr>
-                                            <th>ID Transaksi</th>
-                                            <th>Pelanggan</th>
-                                            <th>Produk</th>
-                                            <th>Jumlah</th>
-                                            <th>Status</th>
-                                            <th>Tanggal</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="font-mono">#RD-9021</td>
-                                            <td>
-                                                <div class="user-inline">
-                                                    <div class="avatar avatar-xs">
-                                               <!DOCTYPE html>
-<html lang="id" data-theme="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ridho Dev - Dashboard Analitik Premium buatan Ridho Gusti Cahyadi. Solusi pemantauan bisnis modern, cepat, dan responsif.">
-    <meta name="author" content="Ridho Gusti Cahyadi">
-    <meta name="robots" content="index, follow">
-    <title>Ridho Dev — Dashboard Analitik Premium</title>
-
-    <!-- Google Fonts: Plus Jakarta Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Style CSS -->
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="app-container">
-        <!-- Overlay untuk Mobile Sidebar -->
-        <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-        <!-- SIDEBAR -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <a href="#" class="brand-logo">
-                    <div class="brand-icon">
-                        <i data-lucide="code-2"></i>
-                    </div>
-                    <div class="brand-info">
-                        <span class="brand-name">Ridho Dev</span>
-                        <span class="brand-subtitle">Analytics Pro</span>
-                    </div>
-                </a>
-                <button class="btn-icon sidebar-close-btn" id="sidebarCloseBtn" aria-label="Tutup Sidebar">
-                    <i data-lucide="x"></i>
-                </button>
-            </div>
-
-            <nav class="sidebar-nav">
-                <div class="nav-group">
-                    <span class="nav-group-title">Utama</span>
-                    <a href="#" class="nav-item active">
-                        <i data-lucide="layout-dashboard"></i>
-                        <span>Dashboard</span>
-                        <span class="badge badge-accent">Live</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i data-lucide="line-chart"></i>
-                        <span>Analitik</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i data-lucide="shopping-bag"></i>
-                        <span>Penjualan</span>
-                        <span class="badge badge-neutral">12</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i data-lucide="users"></i>
-                        <span>Pelanggan</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i data-lucide="package"></i>
-                        <span>Produk</span>
-                    </a>
-                </div>
-
-                <div class="nav-group">
-                    <span class="nav-group-title">Laporan & Pengaturan</span>
-                    <a href="#" class="nav-item">
-                        <i data-lucide="file-text"></i>
-                        <span>Laporan</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i data-lucide="settings"></i>
-                        <span>Pengaturan</span>
-                    </a>
-                    <a href="#" class="nav-item">
-                        <i data-lucide="help-circle"></i>
-                        <span>Pusat Bantuan</span>
-                    </a>
-                </div>
-            </nav>
-
-            <div class="sidebar-footer">
-                <div class="user-card-mini">
-                    <div class="avatar avatar-online">
-                        <img src="assets/images/avatar.jpg" alt="Ridho Gusti Cahyadi" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'">
-                    </div>
-                    <div class="user-info">
-                        <span class="user-name">Ridho G. Cahyadi</span>
-                        <span class="user-role">Senior Developer</span>
-                    </div>
-                    <button class="btn-icon btn-logout" aria-label="Keluar">
-                        <i data-lucide="log-out"></i>
-                    </button>
-                </div>
-            </div>
-        </aside>
-
-        <!-- MAIN WRAPPER -->
-        <div class="main-wrapper">
-            <!-- NAVBAR -->
-            <header class="navbar">
-                <div class="navbar-left">
-                    <button class="btn-icon sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Buka Sidebar">
-                        <i data-lucide="menu"></i>
-                    </button>
-                    
-                    <div class="search-bar">
-                        <i data-lucide="search" class="search-icon"></i>
-                        <input type="text" id="globalSearch" placeholder="Cari transaksi, laporan, atau statistik... (Ctrl + K)">
-                        <kbd class="shortcut-key">Ctrl K</kbd>
-                    </div>
-                </div>
-
-                <div class="navbar-right">
-                    <!-- Toggle Theme -->
-                    <button class="btn-icon theme-toggle-btn" id="themeToggleBtn" title="Ganti Mode Tampilan (Dark/Light)">
-                        <i data-lucide="sun" class="icon-sun"></i>
-                        <i data-lucide="moon" class="icon-moon"></i>
-                    </button>
-
-                    <!-- Notification Dropdown -->
-                    <div class="dropdown-container" id="notifDropdown">
-                        <button class="btn-icon dropdown-trigger" aria-label="Notifikasi">
-                            <i data-lucide="bell"></i>
-                            <span class="badge-dot"></span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right notif-menu">
-                            <div class="dropdown-header">
-                                <h6>Notifikasi</h6>
-                                <span class="badge badge-accent">3 Baru</span>
-                            </div>
-                            <div class="dropdown-body">
-                                <a href="#" class="notif-item unread">
-                                    <div class="notif-icon bg-success-subtle text-success">
-                                        <i data-lucide="shopping-cart"></i>
-                                    </div>
-                                    <div class="notif-content">
-                                        <p class="notif-text"><strong>Pesanan baru #RD-8902</strong> dari Budi Santoso</p>
-                                        <span class="notif-time">2 menit lalu</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="notif-item unread">
-                                    <div class="notif-icon bg-primary-subtle text-primary">
-                                        <i data-lucide="user-plus"></i>
-                                    </div>
-                                    <div class="notif-content">
-                                        <p class="notif-text">Pelanggan baru terdaftar: <strong>Siti Rahma</strong></p>
-                                        <span class="notif-time">15 menit lalu</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="notif-item unread">
-                                    <div class="notif-icon bg-warning-subtle text-warning">
-                                        <i data-lucide="alert-circle"></i>
-                                    </div>
-                                    <div class="notif-content">
-                                        <p class="notif-text">Kapasitas server mencapai <strong>85%</strong></p>
-                                        <span class="notif-time">1 jam lalu</span>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="dropdown-footer">
-                                <a href="#">Lihat Semua Notifikasi</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- User Profile Dropdown -->
-                    <div class="dropdown-container" id="profileDropdown">
-                        <button class="profile-trigger dropdown-trigger">
-                            <div class="avatar avatar-sm">
-                                <img src="assets/images/avatar.jpg" alt="Ridho Gusti Cahyadi" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'">
-                            </div>
-                            <span class="profile-name">Ridho G.</span>
-                            <i data-lucide="chevron-down" class="chevron-icon"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right profile-menu">
-                            <div class="profile-header">
-                                <p class="profile-title">Ridho Gusti Cahyadi</p>
-                                <p class="profile-email">ridho@ridhodev.com</p>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">
-                                <i data-lucide="user"></i> Profil Saya
-                            </a>
-                            <a href="#" class="dropdown-item">
-                                <i data-lucide="sliders"></i> Preferensi
-                            </a>
-                            <a href="#" class="dropdown-item">
-                                <i data-lucide="shield"></i> Keamanan
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item text-danger">
-                                <i data-lucide="log-out"></i> Keluar
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </header>
-
-            <!-- CONTENT BODY -->
-            <main class="content-body">
-                <!-- Page Header -->
-                <div class="page-header">
-                    <div class="page-header-title">
-                        <h1>Dashboard Analitik</h1>
-                        <p>Selamat datang kembali, Ridho! Berikut adalah ringkasan performa bisnis Anda hari ini.</p>
-                    </div>
-                    <div class="page-header-actions">
-                        <button class="btn btn-secondary ripple" id="filterDateBtn">
-                            <i data-lucide="calendar"></i>
-                            <span>7 Hari Terakhir</span>
-                        </button>
-                        <button class="btn btn-primary ripple" id="exportBtn">
-                            <i data-lucide="download"></i>
-                            <span>Ekspor Data</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- METRIC CARDS -->
-                <div class="metrics-grid">
-                    <!-- Metric Card 1 -->
-                    <div class="metric-card glass-card">
-                        <div class="metric-header">
-                            <span class="metric-title">Total Pendapatan</span>
-                            <div class="metric-icon bg-primary-subtle text-primary">
-                                <i data-lucide="dollar-sign"></i>
-                            </div>
-                        </div>
-                        <div class="metric-body">
-                            <h2 class="metric-value" data-counter="128450000" data-prefix="Rp ">Rp 0</h2>
-                            <div class="metric-trend trend-up">
-                                <i data-lucide="trending-up"></i>
-                                <span>+12.5%</span>
-                                <span class="trend-label">vs bulan lalu</span>
-                            </div>
-                        </div>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar" style="width: 78%;"></div>
-                        </div>
-                    </div>
-
-                    <!-- Metric Card 2 -->
-                    <div class="metric-card glass-card">
-                        <div class="metric-header">
-                            <span class="metric-title">Total Pesanan</span>
-                            <div class="metric-icon bg-success-subtle text-success">
-                                <i data-lucide="shopping-bag"></i>
-                            </div>
-                        </div>
-                        <div class="metric-body">
-                            <h2 class="metric-value" data-counter="1420" data-prefix="">0</h2>
-                            <div class="metric-trend trend-up">
-                                <i data-lucide="trending-up"></i>
-                                <span>+8.2%</span>
-                                <span class="trend-label">vs bulan lalu</span>
-                            </div>
-                        </div>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar bg-success" style="width: 64%;"></div>
-                        </div>
-                    </div>
-
-                    <!-- Metric Card 3 -->
-                    <div class="metric-card glass-card">
-                        <div class="metric-header">
-                            <span class="metric-title">Pengguna Aktif</span>
-                            <div class="metric-icon bg-info-subtle text-info">
-                                <i data-lucide="users"></i>
-                            </div>
-                        </div>
-                        <div class="metric-body">
-                            <h2 class="metric-value" data-counter="8940" data-prefix="">0</h2>
-                            <div class="metric-trend trend-up">
-                                <i data-lucide="trending-up"></i>
-                                <span>+18.4%</span>
-                                <span class="trend-label">vs bulan lalu</span>
-                            </div>
-                        </div>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar bg-info" style="width: 88%;"></div>
-                        </div>
-                    </div>
-
-                    <!-- Metric Card 4 -->
-                    <div class="metric-card glass-card">
-                        <div class="metric-header">
-                            <span class="metric-title">Tingkat Konversi</span>
-                            <div class="metric-icon bg-warning-subtle text-warning">
-                                <i data-lucide="percent"></i>
-                            </div>
-                        </div>
-                        <div class="metric-body">
-                            <h2 class="metric-value" data-counter="3.42" data-suffix="%" data-decimals="2">0%</h2>
-                            <div class="metric-trend trend-down">
-                                <i data-lucide="trending-down"></i>
-                                <span>-0.8%</span>
-                                <span class="trend-label">vs bulan lalu</span>
-                            </div>
-                        </div>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar bg-warning" style="width: 45%;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CHARTS SECTION 1 -->
-                <div class="charts-grid-main">
-                    <!-- Revenue Chart -->
-                    <div class="card glass-card chart-card">
-                        <div class="card-header">
-                            <div>
-                                <h3 class="card-title">Ikhtisar Pendapatan & Penjualan</h3>
-                                <p class="card-subtitle">Perbandingan arus kas bulanan sepanjang tahun berjalan</p>
-                            </div>
-                            <div class="card-actions">
-                                <div class="segmented-control">
-                                    <button class="segmented-btn active" data-period="monthly">Bulanan</button>
-                                    <button class="segmented-btn" data-period="weekly">Mingguan</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart-wrapper">
-                                <canvas id="revenueChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Visitors Chart / Doughnut -->
-                    <div class="card glass-card chart-card">
-                        <div class="card-header">
-                            <div>
-                                <h3 class="card-title">Sumber Pengunjung</h3>
-                                <p class="card-subtitle">Distribusi lalu lintas berdasarkan saluran</p>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart-wrapper chart-wrapper-donut">
-                                <canvas id="visitorsChart"></canvas>
-                            </div>
-                            <div class="donut-legend" id="donutLegend"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CHARTS & TABLES SECTION 2 -->
-                <div class="dashboard-bottom-grid">
-                    <!-- Recent Transactions Table -->
-                    <div class="card glass-card table-card">
-                        <div class="card-header">
-                            <div>
-                                <h3 class="card-title">Transaksi Terbaru</h3>
-                                <p class="card-subtitle">Daftar transaksi pelanggan masuk terkini</p>
-                            </div>
-                            <a href="#" class="btn btn-text">Lihat Semua</a>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table" id="transactionTable">
-                                    <thead>
-                                        <tr>
-                                            <th>ID Transaksi</th>
-                                            <th>Pelanggan</th>
-                                            <th>Produk</th>
-                                            <th>Jumlah</th>
-                                            <th>Status</th>
-                                            <th>Tanggal</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                                                <tr>
-                            <td class="font-mono">#RD-9021</td>
-                            <td>
-                                <div class="user-inline">
-                                    <div class="avatar avatar-xs"></div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+    <!-- Splash Screen -->
+    <div id="splashScreen">
+        <h2>Ridho Dev Enterprise SaaS</h2>
+        <p id="splashPercent" style="color:var(--text-muted); margin-top:10px;">0%</p>
+        <div style="width: 200px; height: 6px; background: var(--border-color); border-radius: 3px; margin-top: 15px; overflow: hidden;">
+            <div id="splashProgress" style="width: 0%; height: 100%; background: var(--primary); transition: width 0.1s;"></div>
         </div>
     </div>
 
-    <script src="script.js?v=100"></script>
+    <!-- Sidebar -->
+    <aside id="sidebar">
+        <div class="sidebar-brand">
+            <i data-lucide="layers" style="color:var(--primary);"></i>
+            <span>Enterprise SaaS</span>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a class="nav-item active" data-menu="dashboard"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+            <li><a class="nav-item" data-menu="analitik"><i data-lucide="bar-chart-3"></i> Analitik & Grafik</a></li>
+            <li><a class="nav-item" data-menu="penjualan"><i data-lucide="shopping-bag"></i> Penjualan</a></li>
+            <li><a class="nav-item" data-menu="pelanggan"><i data-lucide="users"></i> Pelanggan VIP</a></li>
+            <li><a class="nav-item" data-menu="produk"><i data-lucide="box"></i> Katalog Produk</a></li>
+            <li><a class="nav-item" data-menu="laporan"><i data-lucide="file-text"></i> Laporan Keuangan</a></li>
+            <li><a class="nav-item" data-menu="calendar"><i data-lucide="calendar"></i> Kalender Agenda</a></li>
+            <li><a class="nav-item" data-menu="filemanager"><i data-lucide="folder"></i> File Manager</a></li>
+            <li><a class="nav-item" data-menu="backup"><i data-lucide="database"></i> Backup & Restore</a></li>
+            <li><a class="nav-item" data-menu="security"><i data-lucide="shield-alert"></i> Keamanan WAF</a></li>
+            <li><a class="nav-item" data-menu="pengaturan"><i data-lucide="settings"></i> Pengaturan Sistem</a></li>
+            <li><a class="nav-item" data-menu="bantuan"><i data-lucide="help-circle"></i> Pusat Bantuan</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div class="main-wrapper">
+        <!-- Topbar -->
+        <header>
+            <div style="display:flex; align-items:center; gap:1rem;">
+                <button class="btn" id="btnToggleSidebar" style="background:transparent; color:var(--text-main);"><i data-lucide="menu"></i></button>
+                <span style="font-size: 0.9rem; font-weight: 500;">Cluster Node: <strong style="color:var(--success);">Online (ap-southeast-1)</strong></span>
+            </div>
+            <div style="display:flex; align-items:center; gap:1rem;">
+                <button class="btn" id="btnThemeToggle" title="Ganti Tema"><i data-lucide="moon"></i></button>
+                <button class="btn" id="btnNotifToggle" title="Notifikasi"><i data-lucide="bell"></i></button>
+            </div>
+        </header>
+
+        <!-- Dynamic Main Content -->
+        <main id="mainContent">
+            <!-- SPA Container -->
+        </main>
+    </div>
+
+    <!-- Global Search Modal -->
+    <div id="searchModal" class="modal">
+        <div class="modal-content" style="max-width:600px;">
+            <input type="text" id="globalSearchInput" class="form-control" placeholder="Cari invoice, pelanggan, produk, dll (Ctrl + K)..." style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-main); color:var(--text-main);">
+            <div id="searchResults" style="margin-top:1rem; max-height:300px; overflow-y:auto;"></div>
+        </div>
+    </div>
+
+    <!-- Chat Support Widget -->
+    <div id="chatSupportBox" style="position:fixed; bottom:20px; left:20px; width:320px; background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; display:none; z-index:1500; overflow:hidden;">
+        <div style="background:var(--primary); color:#fff; padding:10px 15px; font-weight:600; display:flex; justify-content:space-between;">
+            <span>Ridho AI Assistant</span>
+            <button onclick="document.getElementById('chatSupportBox').style.display='none'" style="background:none; border:none; color:#fff; cursor:pointer;">&times;</button>
+        </div>
+        <div id="chatMessages" style="height:220px; padding:10px; overflow-y:auto; font-size:0.85rem;"></div>
+        <div style="padding:10px; border-top:1px solid var(--border-color); display:flex; gap:5px;">
+            <input type="text" id="chatInput" placeholder="Tulis pesan..." style="flex:1; padding:6px; border-radius:6px; border:1px solid var(--border-color); background:var(--bg-main); color:var(--text-main); font-size:0.85rem;">
+            <button class="btn btn-primary" onclick="sendAIChat()" style="padding:6px 12px;">Kirim</button>
+        </div>
+    </div>
+    <button id="chatSupportBtn" class="btn btn-primary" style="position:fixed; bottom:20px; left:20px; border-radius:50px; z-index:1400; box-shadow:0 4px 12px rgba(0,0,0,0.3);"><i data-lucide="message-circle"></i> AI Assistant</button>
+
+    <!-- Notification Dropdown Container -->
+    <div id="notifDropdown" class="card" style="position:absolute; top:75px; right:20px; width:320px; display:none; z-index:2000;">
+        <h4 style="margin-bottom:10px; font-size:0.9rem;">Notifikasi Sistem</h4>
+        <div id="notifContainer" style="max-height:250px; overflow-y:auto;"></div>
+    </div>
+
 </body>
 </html>
-
 
